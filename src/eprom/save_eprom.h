@@ -2,6 +2,7 @@
 // Complete project details at https://RandomNerdTutorials.com/esp32-save-data-permanently-preferences/
 // The Preferences library in the ESP32 framework provides a way to store and retrieve key-value pairs in non-volatile storage (NVS). 
 #include <Preferences.h>
+//#include <nvs_flash.h>
 #include <PrintAnyFormat.h>
 
 #define NAMESPACE "credentials"
@@ -18,7 +19,7 @@ String Wifi_get_from_eeprom (WifiParam param) {
   // Note: Namespace name is limited to 15 chars.
   String returnString;
   if (!pref_eeprom.begin(NAMESPACE, false)) {
-    Println("Failed to open EEPROM");
+    Println("Failed to open EEPROM namespace, creating new one");
     returnString = "Error";
   }
   else {
@@ -47,6 +48,8 @@ String Wifi_get_from_eeprom (WifiParam param) {
 // --------------------------------------
 void Wifi_save_to_eeprom (String wifi_ssid, String wifi_pwd) {
   // save wifi & pw
+  pref_eeprom.begin(NAMESPACE, false);
+  
   pref_eeprom.putString("ssid_eeprom", wifi_ssid);
   pref_eeprom.putString("pwd_eeprom" , wifi_pwd);
 
