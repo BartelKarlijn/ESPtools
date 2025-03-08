@@ -12,5 +12,6 @@ enum WifiParam {
   PWD
 };
 String Wifi_get_from_eeprom (WifiParam param);
+#include "eprom/save_eprom.h"
 
 #endif // ESPTOOLS_H

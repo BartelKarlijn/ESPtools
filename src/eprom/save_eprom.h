@@ -9,10 +9,6 @@
 // Function to Save Wifi data to EEPROM
 // --------------------------------------
 Preferences pref_eeprom;           // to store & read parameters from eprom
-enum WifiParam {
-    SSID,
-    PWD
-  };
   
 // Function to get data from EEPROM
 String Wifi_get_from_eeprom (WifiParam param) {
