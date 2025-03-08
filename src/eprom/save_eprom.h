@@ -4,7 +4,7 @@
 #include <Preferences.h>
 #include <PrintAnyFormat.h>
 
-#define NAMESPACE "WIFI"
+#define NAMESPACE "credentials"
 
 // Function to Save Wifi data to EEPROM
 // --------------------------------------
@@ -21,17 +21,19 @@ String Wifi_get_from_eeprom (WifiParam param) {
     Println("Failed to open EEPROM");
     returnString = "Error";
   }
-  // Get the counter value, if the key does not exist, return a default value of 0
-  // Note: Key name is limited to 15 chars.
-  if (param == SSID) {
-    returnString = pref_eeprom.getString("ssid_eeprom", "");
-    Print("Uit eprom uitgelezen waarde voor SSID = ");
-    Println(returnString);
-  } else if (param == PWD) {
-    returnString = pref_eeprom.getString("pwd_eeprom", "");
-    Print("Uit eprom uitgelezen waarde voor PWD = ");
-    Println("*****");
-    returnString = returnString;
+  else {
+    // Get the counter value, if the key does not exist, return a default value of 0
+    // Note: Key name is limited to 15 chars.
+    if (param == SSID) {
+      returnString = pref_eeprom.getString("ssid_eeprom", "");
+      Print("Uit eprom uitgelezen waarde voor SSID = ");
+      Println(returnString);
+    } else if (param == PWD) {
+      returnString = pref_eeprom.getString("pwd_eeprom", "");
+      Print("Uit eprom uitgelezen waarde voor PWD = ");
+      Println("*****");
+      returnString = returnString;
+    }
   }
   
   // Close Preferences
@@ -44,12 +46,7 @@ String Wifi_get_from_eeprom (WifiParam param) {
 // Function to Read Wifi data to EEPROM
 // --------------------------------------
 void Wifi_save_to_eeprom (String wifi_ssid, String wifi_pwd) {
-  // Open Preferences with WIFI namespace in RW-mode
-  if (!pref_eeprom.begin(NAMESPACE, false)) {
-    Serial.println("Failed to open EEPROM");
-    return;
-  }
-
+  // save wifi & pw
   pref_eeprom.putString("ssid_eeprom", wifi_ssid);
   pref_eeprom.putString("pwd_eeprom" , wifi_pwd);
 
