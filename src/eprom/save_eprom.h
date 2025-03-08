@@ -1,18 +1,9 @@
 #pragma once
-
-#include "ESPtools.h"
-
 // Complete project details at https://RandomNerdTutorials.com/esp32-save-data-permanently-preferences/
 // The Preferences library in the ESP32 framework provides a way to store and retrieve key-value pairs in non-volatile storage (NVS). 
 
 #define NAMESPACE "WIFI"
 
-Preferences pref_eeprom;           // to store & read parameters from eprom
-enum WifiParam {
-    SSID,
-    PWD
-  };
-  
 // Function to get data from EEPROM
 String Wifi_get_from_eeprom (WifiParam param) {
   // Open Preferences with WIFI namespace. Each application module, library, etc
@@ -42,7 +33,7 @@ String Wifi_get_from_eeprom (WifiParam param) {
     pref_eeprom.end();
   }
   return returnString;
-}
+};
 
 
 void Wifi_save_to_eeprom (String wifi_ssid, String wifi_pwd) {
@@ -60,4 +51,3 @@ void Wifi_save_to_eeprom (String wifi_ssid, String wifi_pwd) {
   Print("Uit eprom uitgelezen waarde voor PWD = ");
   Println(pwd_eeprom);
 }
-

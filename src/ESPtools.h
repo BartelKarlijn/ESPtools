@@ -1,27 +1,16 @@
-#ifndef PRINTANYFORMAT_H
-#define PRINTANYFORMAT_H
+#ifndef ESPTOOLS_H
+#define ESPTOOLS_H
 
 #include <Arduino.h>
+#include <Preferences.h>
 
-// Function template declarations and definitions
-template <typename T>
-void Print(T message) {
-  #ifdef PRINTWEBSERIAL
-    WebSerial.print(message);
-  #endif
-  #ifdef PRINTSERIAL
-    Serial.print(message);
-  #endif
-}
+// Function declarations
+void Wifi_save_to_eeprom(String wifi_ssid, String wifi_pwd);
 
-template <typename T>
-void Println(T message) {
-  #ifdef PRINTWEBSERIAL
-    WebSerial.println(message);
-  #endif
-  #ifdef PRINTSERIAL
-    Serial.println(message);
-  #endif
-}
+enum WifiParam {
+  SSID,
+  PWD
+};
+String Wifi_get_from_eeprom (WifiParam param);
 
-#endif
+#endif // ESPTOOLS_H
