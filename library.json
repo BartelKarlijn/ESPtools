@@ -1,0 +1,22 @@
+{
+    "name": "ESPtools",
+    "version": "1.0.0",
+    "description": "A collection of tools for ESP32",
+    "keywords": [
+        "ESP32"
+        ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/BartelKarlijn/ESPtools.git"
+    },
+    "authors": [
+        {
+            "name": "Karlijn Bartel",
+            "email": "a@b.com",
+            "maintainer": true
+        }
+    ],
+    "license": "MIT",
+    "framework": "arduino",
+    "platforms": "ESP32"
+    }
