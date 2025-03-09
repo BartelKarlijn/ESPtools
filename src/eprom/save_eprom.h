@@ -2,7 +2,6 @@
 // Complete project details at https://RandomNerdTutorials.com/esp32-save-data-permanently-preferences/
 // The Preferences library in the ESP32 framework provides a way to store and retrieve key-value pairs in non-volatile storage (NVS). 
 #include <Preferences.h>
-//#include <nvs_flash.h>
 #include <PrintAnyFormat.h>
 
 #define NAMESPACE "credentials"
