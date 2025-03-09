@@ -15,10 +15,21 @@ String Wifi_get_from_eeprom (WifiParam param);
 //i2c
 void scanI2C();
 //spiffs
-
+String humanReadableSize(const size_t bytes);
+void listFiles();
+void listStorage();
+void setupSpiffs();
+void writeFile(const char * path, const char * message);
+String readFile(const char * path);
 
 //Includes
 #include "eprom/save_eprom.h"
 #include "i2c/scanI2C.h"
+#include "spiffs/humanReadableSize.h"
+#include "spiffs/listFiles.h"
+#include "spiffs/listStorage.h"
+#include "spiffs/setupSpiffs.h"
+#include "spiffs/writeFile.h"
+#include "spiffs/readFile.h"
 
 #endif // ESPTOOLS_H
