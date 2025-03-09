@@ -21,6 +21,12 @@ void listStorage();
 void setupSpiffs();
 void writeFile(const char * path, const char * message);
 String readFile(const char * path);
+//Wifi
+String scanWifiNetworks();
+bool setup_ConnectKnownWifi();
+void setup_CreateAccessPoint();
+void startWifi();
+void stopWifi();
 
 //Includes
 #include "eprom/save_eprom.h"
@@ -31,5 +37,10 @@ String readFile(const char * path);
 #include "spiffs/setupSpiffs.h"
 #include "spiffs/writeFile.h"
 #include "spiffs/readFile.h"
+#include "wifi/scanWifiNetworks.h"
+#include "wifi/setup_ConnectKnownWifi.h"
+#include "wifi/setup_CreateAccessPoint.h"
+#include "wifi/startWifi.h"
+#include "wifi/stopWifi.h"
 
 #endif // ESPTOOLS_H
