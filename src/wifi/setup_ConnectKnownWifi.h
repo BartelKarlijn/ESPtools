@@ -9,6 +9,7 @@ bool setup_ConnectKnownWifi(){
   WiFi.begin(wifi_ssid.c_str(), wifi_pwd.c_str());
   delay(1000);
 
+  setup_AsyncWebserverBegin();    // webserver om html te tonen
   // Dit houden we zo'n 30 sec vol, als het dan niet lukt AP opzetten.
   Serial.println("Connecting to wifi");
   delay(500);
