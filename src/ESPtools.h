@@ -9,7 +9,7 @@
 #include <AsyncTCP.h>       // nodig voor de ESPAyncWebserver
 #include <ESPAsyncWebServer.h>
 #include <ElegantOTA.h>
-#include <WebSerial.h>
+//#include <WebSerial.h>
 
 enum WifiParam {
   SSID,
