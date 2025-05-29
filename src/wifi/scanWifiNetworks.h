@@ -1,12 +1,12 @@
 String scanWifiNetworks(){
   String answertoSend;
 
-  Println("");
-  Println("Disconnecting current wifi connection");
-  WiFi.mode(WIFI_STA);
-  WiFi.disconnect();
-  delay(100);
-  Println("start scan");
+//  Println("");
+//  Println("Disconnecting current wifi connection");
+//  WiFi.mode(WIFI_STA);
+//  WiFi.disconnect();
+//  delay(100);
+//  Println("start scan");
 
 // WiFi.scanNetworks will return the number of networks found
   int n = WiFi.scanNetworks();
