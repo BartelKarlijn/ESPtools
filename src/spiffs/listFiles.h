@@ -4,24 +4,52 @@ String listFiles(bool ishtml) {
   String returnText = "";
   Println("Listing files stored on SPIFFS");
   File root = SPIFFS.open("/");
+  
+  // Collect files and sizes into vectors
+  std::vector<String> fileNames;
+  std::vector<size_t> fileSizes;
+  
   File foundfile = root.openNextFile();
+  while (foundfile) {
+    fileNames.push_back(String(foundfile.name()));
+    fileSizes.push_back(foundfile.size());
+    foundfile = root.openNextFile();
+  }
+  
+  // Sort fileNames alphabetically (with corresponding sizes)
+  for (int i = 0; i < fileNames.size(); i++) {
+    for (int j = i + 1; j < fileNames.size(); j++) {
+      if (fileNames[j] < fileNames[i]) {
+        // Swap names
+        String temp = fileNames[i];
+        fileNames[i] = fileNames[j];
+        fileNames[j] = temp;
+        // Swap sizes
+        size_t tempSize = fileSizes[i];
+        fileSizes[i] = fileSizes[j];
+        fileSizes[j] = tempSize;
+      }
+    }
+  }
+  
   if (ishtml) {
     returnText += "<table class='center'><tr><th align='left'>Name</th><th align='left'>Size</th><th></th><th></th></tr>";
   }
-  while (foundfile) {
+  
+  // Process sorted files
+  for (int i = 0; i < fileNames.size(); i++) {
     if (ishtml) {
-      returnText += "<tr align='left'><td>" + String(foundfile.name()) + "</td><td>" + humanReadableSize(foundfile.size()) + "</td>";
-      returnText += "<td><button class='button-small' onclick='downloadDeleteButton(\"" + String(foundfile.name()) + "\", \"download\")\'> Download</button>";
-      returnText += "<td><button class='button-small' onclick='downloadDeleteButton(\"" + String(foundfile.name()) + "\", \"delete\")\'  > Delete</button></tr>";
+      returnText += "<tr align='left'><td>" + fileNames[i] + "</td><td>" + humanReadableSize(fileSizes[i]) + "</td>";
+      returnText += "<td><button class='button-small' onclick='downloadDeleteButton(\"" + fileNames[i] + "\", \"download\")\'> Download</button>";
+      returnText += "<td><button class='button-small' onclick='downloadDeleteButton(\"" + fileNames[i] + "\", \"delete\")\'  > Delete</button></tr>";
     } else {
-      returnText += "File: " + String(foundfile.name()) + " Size: " + humanReadableSize(foundfile.size()) + "\n";
+      returnText += "File: " + fileNames[i] + " Size: " + humanReadableSize(fileSizes[i]) + "\n";
     }
-    foundfile = root.openNextFile();
   }
+  
   if (ishtml) {
     returnText += "</table>";
   }
   root.close();
-  foundfile.close();
   return returnText;
 }
