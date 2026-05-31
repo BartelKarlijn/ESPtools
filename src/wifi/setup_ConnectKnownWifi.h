@@ -1,11 +1,76 @@
-bool setup_ConnectKnownWifi(){
+bool setup_ConnectKnownWifi(String macAddress){
   bool returnMsg = false;
+  uint8_t baseMac[6];
+  uint8_t wifi_mac[6];
+
   Serial.println();
   Serial.println("Disconnecting current wifi connection");
   WiFi.disconnect();
+  
   delay(1000);
   WiFi.mode(WIFI_STA);    // connect to network
   delay(1000);
+
+  esp_wifi_init(NULL); // Zorgt ervoor dat we de MAC kunnen veranderen
+
+  // Read base MAC address
+  esp_err_t ret = esp_wifi_get_mac(WIFI_IF_STA, baseMac);
+  Serial.print("Base MAC address:");
+  if (ret == ESP_OK) {
+    Serial.printf("%02x:%02x:%02x:%02x:%02x:%02x\n",
+                  baseMac[0], baseMac[1], baseMac[2],
+                  baseMac[3], baseMac[4], baseMac[5]);
+  } else {
+    Serial.println("Failed to read MAC address");
+  }
+
+  // Convert MAC address string to byte array
+    if (macAddress.length() == 17) {
+        bool valid = true;
+        for (int i = 0; i < 6; i++) {
+            int pos = i * 3;
+            if (i < 5 && macAddress[pos + 2] != ':') {
+                valid = false;
+                break;
+            }
+
+            char hexPair[3] = { macAddress[pos], macAddress[pos + 1], '\0' };
+            char *endPtr;
+            long value = strtol(hexPair, &endPtr, 16);
+            if (*endPtr != '\0' || value < 0 || value > 0xFF) {
+                valid = false;
+                break;
+            }
+            wifi_mac[i] = (uint8_t)value;
+        }
+
+        if (!valid) {
+            Serial.println("Invalid MAC format");
+        }
+    } else {
+        Serial.println("Invalid MAC length");
+    }
+
+    Serial.print("MAC address: ");
+    Serial.printf("%02x:%02x:%02x:%02x:%02x:%02x\n",
+                  wifi_mac[0], wifi_mac[1], wifi_mac[2],
+                  wifi_mac[3], wifi_mac[4], wifi_mac[5]);
+
+    // Set MAC address
+    esp_err_t err = esp_wifi_set_mac(WIFI_IF_STA, wifi_mac);
+  if (err != ESP_OK) {
+    Serial.print("Failed to set MAC address: ");
+    Serial.println(esp_err_to_name(err));
+  } else {
+    Serial.print("MAC address set to: ");
+    for (int i = 0; i < 6; i++) {
+      Serial.printf("%02X", wifi_mac[i]);
+      if (i < 5) {
+        Serial.print(":");
+      }
+    }
+    Serial.println();
+  }
   WiFi.begin(wifi_ssid.c_str(), wifi_pwd.c_str());
   delay(1000);
 

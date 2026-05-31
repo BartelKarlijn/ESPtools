@@ -1,12 +1,16 @@
-void startWifi() {
+void startWifi(String macAddress) {
   // eerst gekende wifi proberen
-  Println("Start Wifi ssid= ");
+  Serial.println("Start Wifi ssid= ");
   wifi_ssid = Wifi_get_from_eeprom(SSID); // parameters uit eeprom halen (oa ssid/pw en PWD)
   wifi_pwd = Wifi_get_from_eeprom(PWD);
-  Println(wifi_ssid);
+  Serial.println(wifi_ssid);
+
+  delay(5000);
+  Serial.println("Komen we hier wel?");
+
 
   delay(500);
-  flagWifiOn = setup_ConnectKnownWifi();  // Aan gekende wifi connecteren
+  flagWifiOn = setup_ConnectKnownWifi(macAddress);  // Aan gekende wifi connecteren
 
   setup_AsyncWebserverBegin();    // webserver om html te tonen 
 
