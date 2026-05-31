@@ -51,7 +51,7 @@ bool setup_ConnectKnownWifi(String macAddress){
         Serial.println("Invalid MAC length");
     }
 
-    Serial.print("MAC address: ");
+    Serial.print("New MAC address: ");
     Serial.printf("%02x:%02x:%02x:%02x:%02x:%02x\n",
                   wifi_mac[0], wifi_mac[1], wifi_mac[2],
                   wifi_mac[3], wifi_mac[4], wifi_mac[5]);
