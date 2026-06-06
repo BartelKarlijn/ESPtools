@@ -23,8 +23,9 @@ bool setup_ConnectKnownWifi(String macAddress, String deviceName){
       Serial.print("Device should be set to: ");
       Serial.println(deviceName);
     } else {
-      Serial.print("Failed to set device name to ");
-      Serial.println(deviceName);
+      Serial.print("Did we really fail to set device name to ");
+      Serial.print(deviceName);
+      Serial.println("? See next line for current device name:");
     }
   } else {
     Serial.println("Invalid device name length");
