@@ -1,4 +1,4 @@
-bool setup_ConnectKnownWifi(String macAddress){
+bool setup_ConnectKnownWifi(String macAddress, String deviceName){
   bool returnMsg = false;
   uint8_t baseMac[6];
   uint8_t wifi_mac[6];
@@ -10,8 +10,28 @@ bool setup_ConnectKnownWifi(String macAddress){
   delay(1000);
   WiFi.mode(WIFI_STA);    // connect to network
   delay(1000);
-
-  esp_wifi_init(NULL); // Zorgt ervoor dat we de MAC kunnen veranderen
+    // Device name (before Wifi.mode)
+  Serial.print("Current device name: ");
+  Serial.println(WiFi.getHostname());
+  
+  Serial.print("Trying to set device name to: ");
+  Serial.println(deviceName);
+  delay(100);
+  WiFi.config(INADDR_NONE, INADDR_NONE, INADDR_NONE); // Clear any existing IP configuration
+  if (deviceName.length() > 0 and deviceName.length() < 32) {
+    if (WiFi.setHostname(deviceName.c_str()) == ESP_OK) {
+      Serial.print("Device should be set to: ");
+      Serial.println(deviceName);
+    } else {
+      Serial.print("Failed to set device name to ");
+      Serial.println(deviceName);
+    }
+  } else {
+    Serial.println("Invalid device name length");
+  }
+    // Device name (before Wifi.mode)
+  Serial.print("Updated device name: ");
+  Serial.println(WiFi.getHostname());
 
   // Read base MAC address
   esp_err_t ret = esp_wifi_get_mac(WIFI_IF_STA, baseMac);
