@@ -36,7 +36,7 @@ void onOTAStart();
 void onOTAProgress(size_t current, size_t final);
 void onOTAEnd(bool success);
 void setup_AsyncWebserverBegin();
-bool setup_ConnectKnownWifi();
+bool setup_ConnectKnownWifi(String macAddress, String deviceName);
 void setup_CreateAccessPoint();
 void startWifi();
 void stopWifi();
