@@ -94,7 +94,8 @@ bool setup_ConnectKnownWifi(String macAddress, String deviceName){
   }
 
   WiFi.begin(wifi_ssid.c_str(), wifi_pwd.c_str());
-  //WiFi.setTxPower(WIFI_POWER_8_5dBm);
+  WiFi.setTxPower(WIFI_POWER_8_5dBm);
+  //WiFi.setTxPower(WIFI_POWER_19_5dBm);
   delay(1000);
 
   setup_AsyncWebserverBegin();    // webserver om html te tonen
